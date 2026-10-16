@@ -1,0 +1,116 @@
+[
+  {
+    "id": "mrb-judul",
+    "akad": "murabahah",
+    "title": "Judul Akad",
+    "order": 0,
+    "text": "AKAD MURABAHAH\nNomor: {{nomorDokumen}}",
+    "variables": ["nomorDokumen"],
+    "legalSourceIds": [],
+    "mandatory": true
+  },
+  {
+    "id": "mrb-komparisi",
+    "akad": "murabahah",
+    "title": "Komparisi (Identitas Para Pihak)",
+    "order": 1,
+    "text": "Pada hari ini, {{hariTanggal}}, bertempat di {{domisiliHukum}}, telah dibuat dan ditandatangani Akad Murabahah oleh dan antara:\n\n1. Nama: {{namaPenjual}}\n   {{jenisIdentitasPenjual}}: {{identitasPenjual}}\n   Alamat: {{alamatPenjual}}\n   Selanjutnya disebut sebagai \"Pihak Pertama\" (Penjual);\n\n2. Nama: {{namaPembeli}}\n   {{jenisIdentitasPembeli}}: {{identitasPembeli}}\n   Alamat: {{alamatPembeli}}\n   Selanjutnya disebut sebagai \"Pihak Kedua\" (Pembeli);\n\nPihak Pertama dan Pihak Kedua secara bersama-sama disebut \"Para Pihak\".",
+    "variables": [
+      "hariTanggal", "domisiliHukum",
+      "namaPenjual", "jenisIdentitasPenjual", "identitasPenjual", "alamatPenjual",
+      "namaPembeli", "jenisIdentitasPembeli", "identitasPembeli", "alamatPembeli"
+    ],
+    "legalSourceIds": ["KUHPERDATA-1320"],
+    "mandatory": true
+  },
+  {
+    "id": "mrb-pertimbangan",
+    "akad": "murabahah",
+    "title": "Pertimbangan",
+    "order": 2,
+    "text": "Para Pihak terlebih dahulu menerangkan hal-hal sebagai berikut:\na. Bahwa Pihak Pertama memiliki dan/atau menguasai barang yang hendak dijual kepada Pihak Kedua;\nb. Bahwa Pihak Kedua bermaksud membeli barang tersebut dari Pihak Pertama;\nc. Bahwa Para Pihak sepakat untuk melakukan jual beli dengan prinsip Murabahah berdasarkan prinsip syariah, dengan merujuk pada Fatwa DSN-MUI No. 04/DSN-MUI/IV/2000, Kompilasi Hukum Ekonomi Syariah (KHES), serta ketentuan peraturan perundang-undangan yang berlaku;\n\nBerdasarkan hal-hal tersebut di atas, Para Pihak sepakat untuk mengikatkan diri dalam Akad Murabahah dengan ketentuan dan syarat-syarat sebagai berikut:",
+    "variables": [],
+    "legalSourceIds": ["FATWA-MRB", "KHES", "KUHPERDATA-1338"],
+    "mandatory": true
+  },
+  {
+    "id": "mrb-pasal-definisi",
+    "akad": "murabahah",
+    "title": "Definisi",
+    "order": 3,
+    "text": "Dalam akad ini yang dimaksud dengan:\n1. \"Murabahah\" adalah akad jual beli barang dengan menyatakan harga perolehan (harga pokok) dan keuntungan (margin) yang disepakati oleh penjual dan pembeli.\n2. \"Harga Pokok\" adalah harga perolehan barang oleh Penjual.\n3. \"Margin\" adalah keuntungan yang disepakati dan bersifat tetap.\n4. \"Harga Jual\" adalah harga pokok ditambah margin.",
+    "variables": [],
+    "legalSourceIds": ["FATWA-MRB", "KHES"],
+    "mandatory": true
+  },
+  {
+    "id": "mrb-pasal-objek",
+    "akad": "murabahah",
+    "title": "Objek Jual Beli",
+    "order": 4,
+    "text": "1. Pihak Pertama menjual dan Pihak Kedua membeli barang dengan rincian sebagai berikut:\n   a. Jenis barang: {{jenisBarang}}\n   b. Spesifikasi: {{spesifikasiBarang}}\n   c. Jumlah: {{jumlahBarang}} {{satuanBarang}}\n2. Pihak Pertama menyatakan bahwa barang tersebut telah {{statusKepemilikan}} oleh Pihak Pertama pada saat akad ini ditandatangani.\n3. Barang tersebut tidak dalam sengketa, tidak dijaminkan kepada pihak lain, dan tidak dalam sitaan.",
+    "variables": ["jenisBarang", "spesifikasiBarang", "jumlahBarang", "satuanBarang", "statusKepemilikan"],
+    "legalSourceIds": ["FATWA-MRB", "KHES"],
+    "mandatory": true
+  },
+  {
+    "id": "mrb-pasal-harga",
+    "akad": "murabahah",
+    "title": "Harga dan Margin",
+    "order": 5,
+    "text": "1. Para Pihak sepakat atas harga sebagai berikut:\n   a. Harga Pokok (Harga Perolehan): Rp {{hargaPokok}} ({{hargaPokokTerbilang}})\n   b. Margin Keuntungan: Rp {{marginKeuntungan}} ({{marginKeuntunganTerbilang}})\n   c. Harga Jual: Rp {{hargaJual}} ({{hargaJualTerbilang}})\n2. Harga jual bersifat tetap dan tidak berubah selama masa berlakunya akad.\n3. Margin keuntungan bersifat tetap dan tidak bertambah karena keterlambatan pembayaran.",
+    "variables": ["hargaPokok", "hargaPokokTerbilang", "marginKeuntungan", "marginKeuntunganTerbilang", "hargaJual", "hargaJualTerbilang"],
+    "legalSourceIds": ["FATWA-MRB", "KHES"],
+    "mandatory": true
+  },
+  {
+    "id": "mrb-pasal-pembayaran",
+    "akad": "murabahah",
+    "title": "Pembayaran",
+    "order": 6,
+    "text": "{{#pembayaranTangguh}}1. Pihak Kedua sepakat untuk membayar harga jual secara angsuran sebanyak {{jumlahAngsuran}} kali.\n2. Jadwal angsuran adalah sebagai berikut:\n{{jadwalAngsuran}}\n3. Pembayaran dilakukan melalui cara yang disepakati Para Pihak.{{/pembayaranTangguh}}{{^pembayaranTangguh}}1. Pihak Kedua sepakat untuk membayar harga jual secara tunai pada saat penandatanganan akad ini.\n2. Pembayaran dilakukan melalui cara yang disepakati Para Pihak.{{/pembayaranTangguh}}",
+    "variables": ["pembayaranTangguh", "jumlahAngsuran", "jadwalAngsuran"],
+    "legalSourceIds": ["FATWA-MRB"],
+    "mandatory": true
+  },
+  {
+    "id": "mrb-pasal-denda",
+    "akad": "murabahah",
+    "title": "Denda Keterlambatan",
+    "order": 7,
+    "text": "{{#adaDenda}}1. Apabila Pihak Kedua terlambat membayar angsuran, dikenakan denda sebesar Rp {{jumlahDenda}} ({{jumlahDendaTerbilang}}) per hari keterlambatan.\n2. Dana denda tersebut bukan merupakan pendapatan Pihak Pertama, melainkan diperuntukkan sebagai dana sosial (ta'zir) yang akan disalurkan untuk kepentingan sosial.\n3. Denda tidak menambah harga jual yang telah disepakati.{{/adaDenda}}{{^adaDenda}}Para Pihak sepakat bahwa dalam akad ini tidak dikenakan denda atas keterlambatan pembayaran.{{/adaDenda}}",
+    "variables": ["adaDenda", "jumlahDenda", "jumlahDendaTerbilang"],
+    "legalSourceIds": ["FATWA-MRB"],
+    "mandatory": false
+  },
+  {
+    "id": "mrb-pasal-wakalah",
+    "akad": "murabahah",
+    "title": "Wakalah",
+    "order": 8,
+    "text": "{{#adaWakalah}}1. Pihak Pertama memberi kuasa (wakalah) kepada Pihak Kedua untuk membeli barang sebagaimana dimaksud dalam Pasal tentang Objek Jual Beli atas nama Pihak Pertama.\n2. Setelah barang diperoleh, Pihak Kedua wajib menyerahkan bukti pembelian kepada Pihak Pertama.\n3. Akad Murabahah berlaku efektif setelah barang diperoleh dan diserahterimakan.{{/adaWakalah}}{{^adaWakalah}}Pihak Pertama menyatakan bahwa barang yang menjadi objek akad telah dimiliki dan dikuasai sepenuhnya oleh Pihak Pertama sebelum akad ini ditandatangani.{{/adaWakalah}}",
+    "variables": ["adaWakalah"],
+    "legalSourceIds": ["FATWA-MRB"],
+    "mandatory": true
+  },
+  {
+    "id": "mrb-pasal-sengketa",
+    "akad": "murabahah",
+    "title": "Penyelesaian Sengketa",
+    "order": 9,
+    "text": "1. Apabila terjadi perselisihan dalam pelaksanaan akad ini, Para Pihak sepakat untuk menyelesaikan secara musyawarah untuk mufakat.\n2. Apabila musyawarah tidak mencapai mufakat, Para Pihak sepakat untuk menyelesaikan melalui {{mekanismeSengketa}}.\n3. Domisili hukum yang dipilih adalah {{domisiliHukum}}.",
+    "variables": ["mekanismeSengketa", "domisiliHukum"],
+    "legalSourceIds": ["UU-PERADILAN-AGAMA", "KHES"],
+    "mandatory": true
+  },
+  {
+    "id": "mrb-penutup",
+    "akad": "murabahah",
+    "title": "Penutup",
+    "order": 10,
+    "text": "Demikian Akad Murabahah ini dibuat dalam rangkap 2 (dua) bermeterai cukup, masing-masing mempunyai kekuatan hukum yang sama, ditandatangani oleh Para Pihak dan saksi-saksi pada hari dan tanggal tersebut di atas.\n\nPihak Pertama (Penjual)\n\n\n________________________\n{{namaPenjual}}\n\nPihak Kedua (Pembeli)\n\n\n________________________\n{{namaPembeli}}\n\nSaksi 1:\n\n\n________________________\n{{namaSaksi1}}\n\nSaksi 2:\n\n\n________________________\n{{namaSaksi2}}",
+    "variables": ["namaPenjual", "namaPembeli", "namaSaksi1", "namaSaksi2"],
+    "legalSourceIds": [],
+    "mandatory": true
+  }
+]

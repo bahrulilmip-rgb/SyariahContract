@@ -1,0 +1,74 @@
+[
+  {
+    "id": "KUHPERDATA-1320",
+    "type": "kuhperdata",
+    "title": "KUHPerdata Pasal 1320 tentang Syarat Sah Perjanjian",
+    "number": "Pasal 1320 KUHPerdata",
+    "usedFor": ["GEN-01", "GEN-02"],
+    "verified": false,
+    "note": "Syarat sah perjanjian: sepakat, cakap, suatu hal tertentu, sebab yang halal."
+  },
+  {
+    "id": "KUHPERDATA-1338",
+    "type": "kuhperdata",
+    "title": "KUHPerdata Pasal 1338 tentang Asas Kebebasan Berkontrak",
+    "number": "Pasal 1338 KUHPerdata",
+    "usedFor": ["GEN-01"],
+    "verified": false,
+    "note": "Perjanjian yang dibuat secara sah berlaku sebagai undang-undang bagi mereka yang membuatnya."
+  },
+  {
+    "id": "UU-PERBANKAN-SYARIAH",
+    "type": "undang-undang",
+    "title": "Undang-Undang No. 21 Tahun 2008 tentang Perbankan Syariah",
+    "number": "UU No. 21 Tahun 2008",
+    "usedFor": ["GEN-05", "MDH-01", "MSY-01", "MRB-01"],
+    "verified": false,
+    "note": "Dasar hukum operasional perbankan syariah dan akad-akad syariah di Indonesia."
+  },
+  {
+    "id": "KHES",
+    "type": "khes",
+    "title": "Kompilasi Hukum Ekonomi Syariah (KHES) — PERMA No. 2 Tahun 2008",
+    "number": "PERMA No. 2 Tahun 2008",
+    "usedFor": ["GEN-01", "GEN-04", "MDH-01", "MDH-02", "MDH-03", "MDH-04", "MSY-01", "MSY-02", "MSY-03", "MRB-01", "MRB-02", "MRB-03"],
+    "verified": false,
+    "note": "[VERIFIKASI: nomor pasal spesifik perlu diverifikasi oleh ahli]. Buku II tentang Akad."
+  },
+  {
+    "id": "FATWA-MRB",
+    "type": "fatwa",
+    "title": "Fatwa DSN-MUI tentang Murabahah",
+    "number": "04/DSN-MUI/IV/2000",
+    "usedFor": ["MRB-01", "MRB-02", "MRB-03", "MRB-04", "MRB-05", "MRB-06"],
+    "verified": false,
+    "note": "Ahli wajib memverifikasi butir yang dirujuk."
+  },
+  {
+    "id": "FATWA-MDH",
+    "type": "fatwa",
+    "title": "Fatwa DSN-MUI tentang Pembiayaan Mudharabah (Qiradh)",
+    "number": "07/DSN-MUI/IV/2000",
+    "usedFor": ["MDH-01", "MDH-02", "MDH-03", "MDH-04"],
+    "verified": false,
+    "note": "Ahli wajib memverifikasi butir yang dirujuk."
+  },
+  {
+    "id": "FATWA-MSY",
+    "type": "fatwa",
+    "title": "Fatwa DSN-MUI tentang Pembiayaan Musyarakah",
+    "number": "08/DSN-MUI/IV/2000",
+    "usedFor": ["MSY-01", "MSY-02", "MSY-03", "MSY-04", "MSY-05"],
+    "verified": false,
+    "note": "Ahli wajib memverifikasi butir yang dirujuk."
+  },
+  {
+    "id": "UU-PERADILAN-AGAMA",
+    "type": "undang-undang",
+    "title": "UU No. 3 Tahun 2006 jo. UU No. 50 Tahun 2009 tentang Peradilan Agama",
+    "number": "UU No. 3/2006 jo. UU No. 50/2009",
+    "usedFor": ["GEN-04"],
+    "verified": false,
+    "note": "Kewenangan Pengadilan Agama dalam sengketa ekonomi syariah."
+  }
+]
