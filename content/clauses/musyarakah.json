@@ -7,7 +7,8 @@
     "text": "AKAD MUSYARAKAH\nNomor: {{nomorDokumen}}",
     "variables": ["nomorDokumen"],
     "legalSourceIds": [],
-    "mandatory": true
+    "mandatory": true,
+    "purpose": "Menetapkan identitas resmi jenis akad musyarakah (kemitraan modal) dan nomor registrasi dokumen draf untuk penelusuran hukum."
   },
   {
     "id": "msy-komparisi",
@@ -17,7 +18,8 @@
     "text": "Pada hari ini, {{hariTanggal}}, bertempat di {{domisiliHukum}}, telah dibuat dan ditandatangani Akad Musyarakah oleh dan antara:\n\n{{daftarPihak}}\n\nSeluruh pihak tersebut secara bersama-sama disebut \"Para Pihak\" atau \"Para Syarik\".",
     "variables": ["hariTanggal", "domisiliHukum", "daftarPihak"],
     "legalSourceIds": ["KUHPERDATA-1320"],
-    "mandatory": true
+    "mandatory": true,
+    "purpose": "Mencatat identitas para mitra (Syarik) yang memiliki kecakapan bertindak hukum dalam mendirikan kemitraan usaha."
   },
   {
     "id": "msy-pertimbangan",
@@ -27,7 +29,8 @@
     "text": "Para Pihak terlebih dahulu menerangkan hal-hal sebagai berikut:\na. Bahwa Para Pihak masing-masing memiliki modal yang hendak digabungkan dalam suatu usaha bersama yang halal dan sesuai dengan prinsip syariah;\nb. Bahwa Para Pihak sepakat untuk mengadakan kerja sama usaha dalam bentuk akad Musyarakah berdasarkan prinsip syariah, dengan merujuk pada Fatwa DSN-MUI No. 08/DSN-MUI/IV/2000, Kompilasi Hukum Ekonomi Syariah (KHES), serta ketentuan peraturan perundang-undangan yang berlaku;\n\nBerdasarkan hal-hal tersebut di atas, Para Pihak sepakat untuk mengikatkan diri dalam Akad Musyarakah dengan ketentuan dan syarat-syarat sebagai berikut:",
     "variables": [],
     "legalSourceIds": ["FATWA-MSY", "KHES", "KUHPERDATA-1338"],
-    "mandatory": true
+    "mandatory": true,
+    "purpose": "Mukadimah yang memuat dasar kesepakatan penggabungan modal secara syariah di antara seluruh mitra usaha."
   },
   {
     "id": "msy-pasal-definisi",
@@ -37,7 +40,8 @@
     "text": "Dalam akad ini yang dimaksud dengan:\n1. \"Musyarakah\" adalah akad kerja sama usaha antara dua pihak atau lebih yang masing-masing menyertakan modal, dan keuntungan serta kerugian dibagi sesuai kesepakatan.\n2. \"Syarik\" adalah masing-masing pihak yang menyertakan modal dalam usaha bersama.\n3. \"Nisbah\" adalah proporsi pembagian keuntungan yang dinyatakan dalam persentase.\n4. \"Modal\" adalah dana atau aset yang diserahkan oleh masing-masing Syarik untuk usaha bersama.",
     "variables": [],
     "legalSourceIds": ["FATWA-MSY", "KHES"],
-    "mandatory": true
+    "mandatory": true,
+    "purpose": "Menstandarkan batasan konsep hukum syirkah 'inan agar hak dan tanggung jawab antar mitra terdefinisi jelas."
   },
   {
     "id": "msy-pasal-modal",
@@ -47,7 +51,8 @@
     "text": "1. Para Pihak sepakat untuk menyertakan modal sebagai berikut:\n{{daftarModal}}\n2. Total modal gabungan adalah sebesar Rp {{totalModal}} ({{totalModalTerbilang}}).\n3. Modal diserahkan secara tunai dan penuh pada saat penandatanganan akad ini atau sesuai jadwal yang disepakati.",
     "variables": ["daftarModal", "totalModal", "totalModalTerbilang"],
     "legalSourceIds": ["FATWA-MSY", "KHES"],
-    "mandatory": true
+    "mandatory": true,
+    "purpose": "Menegaskan rincian kontribusi modal masing-masing mitra dan total modal bersama yang menjadi basis kepemilikan usaha."
   },
   {
     "id": "msy-pasal-nisbah",
@@ -57,7 +62,8 @@
     "text": "1. Para Pihak sepakat bahwa keuntungan bersih usaha dibagi dengan nisbah sebagai berikut:\n{{daftarNisbah}}\n2. Keuntungan bersih dihitung dari pendapatan usaha dikurangi biaya-biaya operasional yang wajar.\n3. Tidak diperkenankan menetapkan jumlah keuntungan dalam nilai nominal yang pasti bagi salah satu pihak.\n4. Pembagian keuntungan dilakukan setiap {{periodeBagiHasil}}.",
     "variables": ["daftarNisbah", "periodeBagiHasil"],
     "legalSourceIds": ["FATWA-MSY", "KHES"],
-    "mandatory": true
+    "mandatory": true,
+    "purpose": "Menetapkan porsi nisbah bagi hasil keuntungan yang disepakati bebas antar mitra berdasarkan persentase laba nyata."
   },
   {
     "id": "msy-pasal-kerugian",
@@ -67,7 +73,8 @@
     "text": "1. Kerugian usaha ditanggung oleh Para Pihak sesuai dengan proporsi modal masing-masing.\n2. Proporsi pembagian kerugian adalah sebagai berikut:\n{{daftarProporsiKerugian}}\n3. Apabila kerugian disebabkan oleh kelalaian atau pelanggaran salah satu pihak, maka pihak tersebut menanggung kerugian yang timbul.",
     "variables": ["daftarProporsiKerugian"],
     "legalSourceIds": ["FATWA-MSY", "KHES"],
-    "mandatory": true
+    "mandatory": true,
+    "purpose": "Mengunci aturan pokok syariah bahwa kerugian finansial dibagi strictly proporsional terhadap modal masing-masing mitra."
   },
   {
     "id": "msy-pasal-pengelolaan",
@@ -77,7 +84,8 @@
     "text": "1. Para Pihak sepakat bahwa pengelolaan usaha dilakukan dengan ketentuan sebagai berikut:\n{{wewenangPengelolaan}}\n2. Keputusan strategis yang menyangkut perubahan jenis usaha, penambahan modal, atau pengeluaran di atas jumlah tertentu harus mendapat persetujuan seluruh Pihak.\n3. Masing-masing Pihak wajib menjalankan tugas pengelolaan dengan itikad baik dan penuh tanggung jawab.",
     "variables": ["wewenangPengelolaan"],
     "legalSourceIds": ["FATWA-MSY"],
-    "mandatory": true
+    "mandatory": true,
+    "purpose": "Mengatur tata kelola (governance) kemitraan, pembagian tugas eksekutif, dan mekanisme pengambilan keputusan strategis bersama."
   },
   {
     "id": "msy-pasal-jenis-usaha",
@@ -87,7 +95,8 @@
     "text": "1. Modal gabungan digunakan untuk usaha: {{jenisUsaha}}.\n2. Usaha tersebut termasuk dalam kategori usaha yang halal dan tidak bertentangan dengan prinsip syariah.\n3. Akad ini berlaku untuk jangka waktu {{jangkaWaktu}}, terhitung sejak tanggal {{tanggalMulai}} sampai dengan tanggal {{tanggalBerakhir}}.",
     "variables": ["jenisUsaha", "jangkaWaktu", "tanggalMulai", "tanggalBerakhir"],
     "legalSourceIds": ["FATWA-MSY"],
-    "mandatory": true
+    "mandatory": true,
+    "purpose": "Menentukan batas jenis usaha halal dan jangka waktu ikatan kemitraan usaha para mitra."
   },
   {
     "id": "msy-pasal-sengketa",
@@ -97,16 +106,18 @@
     "text": "1. Apabila terjadi perselisihan dalam pelaksanaan akad ini, Para Pihak sepakat untuk menyelesaikan secara musyawarah untuk mufakat.\n2. Apabila musyawarah tidak mencapai mufakat, Para Pihak sepakat untuk menyelesaikan melalui {{mekanismeSengketa}}.\n3. Domisili hukum yang dipilih adalah {{domisiliHukum}}.",
     "variables": ["mekanismeSengketa", "domisiliHukum"],
     "legalSourceIds": ["UU-PERADILAN-AGAMA", "KHES"],
-    "mandatory": true
+    "mandatory": true,
+    "purpose": "Menetapkan prosedur resolusi konflik internal kemitraan melalui musyawarah, arbitrase syariah (BASYARNAS), atau Pengadilan Agama."
   },
   {
     "id": "msy-penutup",
     "akad": "musyarakah",
     "title": "Penutup",
     "order": 10,
-    "text": "Demikian Akad Musyarakah ini dibuat dalam rangkap sejumlah Para Pihak bermeterai cukup, masing-masing mempunyai kekuatan hukum yang sama, ditandatangani oleh Para Pihak dan saksi-saksi pada hari dan tanggal tersebut di atas.\n\n{{tandaTanganPihak}}\n\nSaksi 1:\n\n\n________________________\n{{namaSaksi1}}\n\nSaksi 2:\n\n\n________________________\n{{namaSaksi2}}",
+    "text": "Demikian Akad Musyarakah ini dibuat dalam rangkap bermeterai cukup sesuai jumlah Pihak, masing-masing mempunyai kekuatan hukum yang sama, ditandatangani oleh Para Pihak dan saksi-saksi pada hari dan tanggal tersebut di atas.\n\n{{tandaTanganPihak}}\n\nSaksi 1:\n\n\n________________________\n{{namaSaksi1}}\n\nSaksi 2:\n\n\n________________________\n{{namaSaksi2}}",
     "variables": ["tandaTanganPihak", "namaSaksi1", "namaSaksi2"],
     "legalSourceIds": [],
-    "mandatory": true
+    "mandatory": true,
+    "purpose": "Pengesahan perikatan melalui penandatanganan oleh seluruh mitra dan saksi-saksi sebagai akta perjanjian yang mengikat."
   }
 ]

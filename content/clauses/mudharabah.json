@@ -7,7 +7,8 @@
     "text": "AKAD MUDHARABAH\nNomor: {{nomorDokumen}}",
     "variables": ["nomorDokumen"],
     "legalSourceIds": [],
-    "mandatory": true
+    "mandatory": true,
+    "purpose": "Menetapkan identitas resmi jenis akad mudharabah dan nomor registrasi dokumen draf untuk penelusuran hukum."
   },
   {
     "id": "mdh-komparisi",
@@ -21,7 +22,8 @@
       "namaMudharib", "jenisIdentitasMudharib", "identitasMudharib", "alamatMudharib"
     ],
     "legalSourceIds": ["KUHPERDATA-1320"],
-    "mandatory": true
+    "mandatory": true,
+    "purpose": "Menegaskan kedudukan subjek hukum pemilik modal (Shahibul Maal) dan pengelola usaha (Mudharib) yang cakap bertindak hukum."
   },
   {
     "id": "mdh-pertimbangan",
@@ -31,7 +33,8 @@
     "text": "Para Pihak terlebih dahulu menerangkan hal-hal sebagai berikut:\na. Bahwa Pihak Pertama memiliki modal yang hendak dikelola dalam suatu usaha yang halal dan sesuai dengan prinsip syariah;\nb. Bahwa Pihak Kedua memiliki keahlian dan kesanggupan untuk mengelola usaha;\nc. Bahwa Para Pihak sepakat untuk mengadakan kerja sama usaha dalam bentuk akad Mudharabah berdasarkan prinsip syariah, dengan merujuk pada Fatwa DSN-MUI No. 07/DSN-MUI/IV/2000, Kompilasi Hukum Ekonomi Syariah (KHES), serta ketentuan peraturan perundang-undangan yang berlaku;\n\nBerdasarkan hal-hal tersebut di atas, Para Pihak sepakat untuk mengikatkan diri dalam Akad Mudharabah dengan ketentuan dan syarat-syarat sebagai berikut:",
     "variables": [],
     "legalSourceIds": ["FATWA-MDH", "KHES", "KUHPERDATA-1338"],
-    "mandatory": true
+    "mandatory": true,
+    "purpose": "Mukadimah yang memuat landasan iktikad baik, kepercayaan, dan kepatuhan syariah para pihak dalam kerja sama permodalan."
   },
   {
     "id": "mdh-pasal-definisi",
@@ -41,7 +44,8 @@
     "text": "Dalam akad ini yang dimaksud dengan:\n1. \"Mudharabah\" adalah akad kerja sama usaha antara pemilik modal (Shahibul Maal) yang menyediakan seluruh modal dengan pengelola (Mudharib) yang bertindak selaku pengelola, dan keuntungan usaha dibagi di antara mereka sesuai nisbah yang disepakati dalam akad ini.\n2. \"Shahibul Maal\" adalah Pihak Pertama selaku pemilik modal.\n3. \"Mudharib\" adalah Pihak Kedua selaku pengelola usaha.\n4. \"Nisbah\" adalah proporsi pembagian keuntungan yang dinyatakan dalam persentase.\n5. \"Modal\" adalah dana atau aset yang diserahkan Shahibul Maal kepada Mudharib untuk dikelola dalam usaha.",
     "variables": [],
     "legalSourceIds": ["FATWA-MDH", "KHES"],
-    "mandatory": true
+    "mandatory": true,
+    "purpose": "Menstandarkan definisi hukum istilah pokok Mudharabah agar tidak terjadi kekeliruan dengan skema pinjaman berbunga atau persekutuan biasa."
   },
   {
     "id": "mdh-pasal-modal",
@@ -51,7 +55,8 @@
     "text": "1. Pihak Pertama (Shahibul Maal) menyerahkan modal berupa {{bentukModal}} sebesar Rp {{jumlahModal}} ({{jumlahModalTerbilang}}) kepada Pihak Kedua (Mudharib).\n2. Modal tersebut diserahkan secara tunai dan penuh pada saat penandatanganan akad ini.\n3. Modal digunakan oleh Mudharib semata-mata untuk menjalankan usaha sebagaimana dimaksud dalam Pasal tentang Jenis Usaha.",
     "variables": ["bentukModal", "jumlahModal", "jumlahModalTerbilang"],
     "legalSourceIds": ["FATWA-MDH", "KHES"],
-    "mandatory": true
+    "mandatory": true,
+    "purpose": "Menetapkan kepastian jumlah, wujud fisik modal (uang tunai atau aset bernilai jelas), dan penyerahannya kepada pengelola."
   },
   {
     "id": "mdh-pasal-nisbah",
@@ -61,7 +66,8 @@
     "text": "1. Para Pihak sepakat bahwa keuntungan bersih usaha dibagi dengan nisbah sebagai berikut:\n   a. Pihak Pertama (Shahibul Maal): {{nisbahShahibulMaal}}% ({{nisbahShahibulMaalTerbilang}} persen)\n   b. Pihak Kedua (Mudharib): {{nisbahMudharib}}% ({{nisbahMudharibTerbilang}} persen)\n2. Keuntungan bersih dihitung dari pendapatan usaha dikurangi biaya-biaya operasional yang wajar.\n3. Pembagian keuntungan dilakukan setiap {{periodeBagiHasil}}.\n4. Tidak diperkenankan menetapkan jumlah keuntungan dalam nilai nominal yang pasti bagi salah satu pihak.",
     "variables": ["nisbahShahibulMaal", "nisbahShahibulMaalTerbilang", "nisbahMudharib", "nisbahMudharibTerbilang", "periodeBagiHasil"],
     "legalSourceIds": ["FATWA-MDH", "KHES"],
-    "mandatory": true
+    "mandatory": true,
+    "purpose": "Mengatur nisbah bagi hasil berbasis persentase atas laba riil serta melarang penetapan nominal tetap yang menyerupai bunga riba."
   },
   {
     "id": "mdh-pasal-jenis-usaha",
@@ -71,7 +77,8 @@
     "text": "1. Modal sebagaimana dimaksud digunakan untuk usaha: {{jenisUsaha}}.\n2. Usaha tersebut termasuk dalam kategori usaha yang halal dan tidak bertentangan dengan prinsip syariah.\n3. Akad ini berlaku untuk jangka waktu {{jangkaWaktu}}, terhitung sejak tanggal {{tanggalMulai}} sampai dengan tanggal {{tanggalBerakhir}}.\n4. Perpanjangan jangka waktu dapat dilakukan dengan kesepakatan tertulis Para Pihak.",
     "variables": ["jenisUsaha", "jangkaWaktu", "tanggalMulai", "tanggalBerakhir"],
     "legalSourceIds": ["FATWA-MDH"],
-    "mandatory": true
+    "mandatory": true,
+    "purpose": "Membatasi ruang lingkup objek usaha pada sektor halal dan menentukan batas waktu berlakunya amanah permodalan."
   },
   {
     "id": "mdh-pasal-kerugian",
@@ -81,7 +88,8 @@
     "text": "1. Kerugian usaha yang bukan disebabkan oleh kelalaian atau pelanggaran Mudharib ditanggung sepenuhnya oleh Shahibul Maal sebatas modal yang disertakan.\n2. Apabila kerugian disebabkan oleh kelalaian, kesengajaan, atau pelanggaran ketentuan akad oleh Mudharib, maka kerugian menjadi tanggung jawab Mudharib.\n3. Untuk menentukan ada atau tidaknya kelalaian Mudharib, Para Pihak sepakat untuk menunjuk pihak yang berkompeten untuk melakukan pemeriksaan bila diperlukan.",
     "variables": [],
     "legalSourceIds": ["FATWA-MDH", "KHES"],
-    "mandatory": true
+    "mandatory": true,
+    "purpose": "Menegaskan kaidah syariah 'al-ghunmu bil-ghurmi' bahwa risiko kerugian finansial normal ditanggung pemilik modal kecuali terbukti ada kelalaian/penyimpangan pengelola."
   },
   {
     "id": "mdh-pasal-hak-kewajiban",
@@ -91,7 +99,8 @@
     "text": "1. Hak dan Kewajiban Shahibul Maal:\n   a. Berhak atas bagian keuntungan sesuai nisbah yang disepakati;\n   b. Berhak melakukan pengawasan atas jalannya usaha tanpa mencampuri pengelolaan;\n   c. Wajib menyerahkan modal sesuai dengan yang diperjanjikan.\n\n2. Hak dan Kewajiban Mudharib:\n   a. Berhak atas bagian keuntungan sesuai nisbah yang disepakati;\n   b. Berhak mengelola usaha sesuai keahliannya;\n   c. Wajib menjalankan usaha dengan itikad baik, jujur, dan bertanggung jawab;\n   d. Wajib memberikan laporan keuangan usaha secara berkala;\n   e. Wajib menjaga dan memelihara modal yang diamanahkan;\n   f. Dilarang mencampurkan modal Mudharabah dengan harta pribadi tanpa izin Shahibul Maal.",
     "variables": [],
     "legalSourceIds": ["FATWA-MDH", "KHES"],
-    "mandatory": true
+    "mandatory": true,
+    "purpose": "Menjaga keseimbangan relasi fidusia antara hak pengawasan pemilik modal dan kemandirian eksekutif pengelola usaha."
   },
   {
     "id": "mdh-pasal-jaminan",
@@ -101,7 +110,8 @@
     "text": "{{#adaJaminan}}1. Pihak Kedua (Mudharib) menyerahkan jaminan berupa: {{deskripsiJaminan}}.\n2. Jaminan tersebut semata-mata bertujuan untuk menjamin bahwa Mudharib tidak melakukan penyimpangan atau kelalaian dalam pengelolaan usaha, bukan sebagai jaminan atas modal.\n3. Jaminan akan dikembalikan kepada Mudharib setelah akad berakhir dan seluruh kewajiban telah dipenuhi.{{/adaJaminan}}{{^adaJaminan}}Para Pihak sepakat bahwa dalam akad ini tidak ada jaminan yang diberikan oleh Mudharib.{{/adaJaminan}}",
     "variables": ["adaJaminan", "deskripsiJaminan"],
     "legalSourceIds": ["FATWA-MDH"],
-    "mandatory": false
+    "mandatory": false,
+    "purpose": "Mengatur kedudukan agunan yang hanya boleh dieksekusi bila terjadi wanprestasi atau kelalaian moral (moral hazard), bukan kerugian bisnis alami."
   },
   {
     "id": "mdh-pasal-sengketa",
@@ -111,7 +121,8 @@
     "text": "1. Apabila terjadi perselisihan dalam pelaksanaan akad ini, Para Pihak sepakat untuk menyelesaikan secara musyawarah untuk mufakat.\n2. Apabila musyawarah tidak mencapai mufakat, Para Pihak sepakat untuk menyelesaikan melalui {{mekanismeSengketa}}.\n3. Domisili hukum yang dipilih adalah {{domisiliHukum}}.",
     "variables": ["mekanismeSengketa", "domisiliHukum"],
     "legalSourceIds": ["UU-PERADILAN-AGAMA", "KHES"],
-    "mandatory": true
+    "mandatory": true,
+    "purpose": "Menetapkan mekanisme perdamaian syariah serta yurisdiksi Pengadilan Agama atau Badan Arbitrase Syariah Nasional (BASYARNAS)."
   },
   {
     "id": "mdh-pasal-berakhir",
@@ -121,7 +132,8 @@
     "text": "Akad Mudharabah ini berakhir karena:\n1. Jangka waktu akad telah habis;\n2. Kesepakatan Para Pihak untuk mengakhiri akad;\n3. Mudharib meninggal dunia atau tidak cakap hukum;\n4. Usaha yang dijalankan bangkrut atau tidak dapat dilanjutkan;\n5. Modal habis atau berkurang sehingga usaha tidak dapat berjalan;\n6. Mudharib melakukan pelanggaran material terhadap ketentuan akad ini.",
     "variables": [],
     "legalSourceIds": ["KHES"],
-    "mandatory": true
+    "mandatory": true,
+    "purpose": "Memberikan kepastian hukum mengenai kondisi-kondisi pembubaran kerja sama dan prosedur likuidasi modal."
   },
   {
     "id": "mdh-penutup",
@@ -131,6 +143,7 @@
     "text": "Demikian Akad Mudharabah ini dibuat dalam rangkap 2 (dua) bermeterai cukup, masing-masing mempunyai kekuatan hukum yang sama, ditandatangani oleh Para Pihak dan saksi-saksi pada hari dan tanggal tersebut di atas.\n\nPihak Pertama (Shahibul Maal)\n\n\n________________________\n{{namaShahibulMaal}}\n\nPihak Kedua (Mudharib)\n\n\n________________________\n{{namaMudharib}}\n\nSaksi 1:\n\n\n________________________\n{{namaSaksi1}}\n\nSaksi 2:\n\n\n________________________\n{{namaSaksi2}}",
     "variables": ["namaShahibulMaal", "namaMudharib", "namaSaksi1", "namaSaksi2"],
     "legalSourceIds": [],
-    "mandatory": true
+    "mandatory": true,
+    "purpose": "Pengesahan perikatan dengan pembubuhan tanda tangan para pihak dan saksi-saksi sebagai alat bukti otentik."
   }
 ]

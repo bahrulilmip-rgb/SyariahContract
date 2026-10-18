@@ -283,5 +283,196 @@ describe("Generator: generateDraft", () => {
     expect(nisbahClause).toBeDefined();
     expect(nisbahClause?.teks).toContain("60%");
     expect(nisbahClause?.teks).toContain("40%");
+    expect(nisbahClause?.purpose).toBeDefined();
   });
 });
+
+describe("Pemeriksaan Kepatuhan Berbasis Aturan Terstruktur (Structured Statuses)", () => {
+  const baseMurabahah: MurabahahFormData = {
+    jenisAkad: "murabahah",
+    ppihat: [
+      { nama: "Penjual", identitas: "123", jenisIdentitas: "NIK", alamat: "Semarang", peran: "penjual" },
+      { nama: "Pembeli", identitas: "456", jenisIdentitas: "NIK", alamat: "Kudus", peran: "pembeli" },
+    ],
+    saksi: [],
+    tanggalMulai: "2026-01-01",
+    tanggalBerakhir: "2026-12-31",
+    objekUsaha: "Pengadaan Mesin",
+    kategoriUsaha: "Elektronik",
+    domisiliHukum: "Semarang",
+    penyelesaianSengketa: ["musyawarah", "pengadilan_agama"],
+    jenisBarang: "Mesin Cetak",
+    spesifikasiBarang: "Kondisi Baru",
+    jumlahBarang: 1,
+    satuanBarang: "unit",
+    hargaPokok: 10000000,
+    marginKeuntungan: 2000000,
+    hargaJual: 12000000,
+    pembayaranTangguh: true,
+    jumlahAngsuran: 6,
+    barangDimiliki: true,
+    adaWakalah: false,
+    adaDenda: false,
+  };
+
+  it("menghasilkan status PASS untuk data yang memenuhi syarat spesifik", () => {
+    const summary = evaluateCompliance(baseMurabahah);
+    expect(summary.statusCounts?.pass).toBeGreaterThan(0);
+    const mrb01 = summary.results.find((r) => r.ruleId === "MRB-01");
+    expect(mrb01?.status).toBe("PASS");
+    expect(mrb01?.passed).toBe(true);
+  });
+
+  it("menghasilkan status FAIL jika barang belum dimiliki dan tidak ada wakalah (MRB-03)", () => {
+    const invalidGoods = { ...baseMurabahah, barangDimiliki: false, adaWakalah: false };
+    const res = evaluateMurabahahRules(invalidGoods);
+    const mrb03 = res.find((r) => r.ruleId === "MRB-03");
+    expect(mrb03?.status).toBe("FAIL");
+    expect(mrb03?.severity).toBe("block");
+    expect(mrb03?.actionableSuggestion).toContain("Wakalah");
+  });
+
+  it("menghasilkan status NEEDS_INFORMATION jika identitas para pihak belum lengkap (GEN-01)", () => {
+    const incompleteParties = {
+      ...baseMurabahah,
+      ppihat: [
+        { nama: "", identitas: "", jenisIdentitas: "NIK" as const, alamat: "", peran: "penjual" as const },
+        { nama: "Pembeli", identitas: "456", jenisIdentitas: "NIK" as const, alamat: "Kudus", peran: "pembeli" as const },
+      ],
+    };
+    const res = evaluateGeneralRules(incompleteParties);
+    const gen01 = res.find((r) => r.ruleId === "GEN-01");
+    expect(gen01?.status).toBe("NEEDS_INFORMATION");
+    expect(gen01?.actionableSuggestion).toBeDefined();
+  });
+
+  it("menghasilkan status REVIEW_REQUIRED untuk klausul denda ta'zir sosial (MRB-06)", () => {
+    const withDenda = { ...baseMurabahah, adaDenda: true, jumlahDenda: 10000 };
+    const res = evaluateMurabahahRules(withDenda);
+    const mrb06 = res.find((r) => r.ruleId === "MRB-06");
+    expect(mrb06?.status).toBe("REVIEW_REQUIRED");
+    expect(mrb06?.expertReviewRequired).toBe(true);
+    expect(mrb06?.legalSourceIds).toContain("FATWA-17-TAZIR");
+  });
+
+  it("menghasilkan status NOT_CHECKED untuk aspek fisik serah terima barang nyata (MRB-07)", () => {
+    const res = evaluateMurabahahRules(baseMurabahah);
+    const mrb07 = res.find((r) => r.ruleId === "MRB-07");
+    expect(mrb07?.status).toBe("NOT_CHECKED");
+    expect(mrb07?.explanation).toContain("serah terima");
+  });
+
+  it("memuat Explainable Findings lengkap (apa yang diperiksa, fakta, klausul, rujukan)", () => {
+    const summary = evaluateCompliance(baseMurabahah);
+    const mrb01 = summary.results.find((r) => r.ruleId === "MRB-01");
+    expect(mrb01?.requirementTested).toBeDefined();
+    expect(mrb01?.factsEvaluated?.length).toBeGreaterThan(0);
+    expect(mrb01?.relatedClauseIds).toContain("pasal-harga");
+    expect(mrb01?.sourcesVerificationStatus).toBe("UNVERIFIED");
+  });
+});
+
+describe("Clause-Level Review & Safe Revision", () => {
+  it("menerapkan revisi klausul secara aman tanpa mengubah klausul lain", async () => {
+    const { applyClauseRevision, resetClauseRevision, generateDraft } = await import("@/core/generator");
+    const testForm: MurabahahFormData = {
+      jenisAkad: "murabahah",
+      ppihat: [
+        { nama: "Penjual", identitas: "123", jenisIdentitas: "NIK", alamat: "Semarang", peran: "penjual" },
+        { nama: "Pembeli", identitas: "456", jenisIdentitas: "NIK", alamat: "Kudus", peran: "pembeli" },
+      ],
+      saksi: [],
+      tanggalMulai: "2026-01-01",
+      tanggalBerakhir: "2026-12-31",
+      objekUsaha: "Pengadaan Mesin",
+      kategoriUsaha: "Elektronik",
+      domisiliHukum: "Semarang",
+      penyelesaianSengketa: ["musyawarah"],
+      jenisBarang: "Mesin Cetak",
+      spesifikasiBarang: "Kondisi Baru",
+      jumlahBarang: 1,
+      satuanBarang: "unit",
+      hargaPokok: 10000000,
+      marginKeuntungan: 2000000,
+      hargaJual: 12000000,
+      pembayaranTangguh: false,
+      barangDimiliki: true,
+      adaWakalah: false,
+      adaDenda: false,
+    };
+
+    const initialDraft = generateDraft(testForm);
+    expect(initialDraft.draftVersion).toBe(1);
+    expect(initialDraft.isStale).toBe(false);
+
+    const targetClause = initialDraft.klausul[0];
+    const originalText = targetClause.teks;
+    const customText = originalText + "\n[Catatan Revisi Tambahan Para Pihak]";
+
+    // Terapkan revisi
+    const revisedDraft = applyClauseRevision(initialDraft, targetClause.nomor, customText);
+    expect(revisedDraft.draftVersion).toBe(2);
+    expect(revisedDraft.isStale).toBe(true);
+
+    const revisedClause = revisedDraft.klausul.find((c) => c.nomor === targetClause.nomor);
+    expect(revisedClause?.isCustomized).toBe(true);
+    expect(revisedClause?.originalText).toBe(originalText);
+    expect(revisedClause?.teks).toBe(customText);
+
+    // Reset revisi
+    const resetDraft = resetClauseRevision(revisedDraft, targetClause.nomor);
+    const restoredClause = resetDraft.klausul.find((c) => c.nomor === targetClause.nomor);
+    expect(restoredClause?.isCustomized).toBe(false);
+    expect(restoredClause?.teks).toBe(originalText);
+  });
+});
+
+describe("Document Export: Word HTML and Markdown", () => {
+  it("menghasilkan dokumen Word HTML dengan lampiran audit kepatuhan dan disklaimer", async () => {
+    const { generateWordHtmlContent, generateMarkdownContract } = await import("@/core/export");
+    const { generateDraft } = await import("@/core/generator");
+
+    const testForm: MurabahahFormData = {
+      jenisAkad: "murabahah",
+      ppihat: [
+        { nama: "Ahmad", identitas: "111", jenisIdentitas: "NIK", alamat: "Semarang", peran: "penjual" },
+        { nama: "Budi", identitas: "222", jenisIdentitas: "NIK", alamat: "Semarang", peran: "pembeli" },
+      ],
+      saksi: [
+        { nama: "S1", identitas: "333", alamat: "Semarang" },
+        { nama: "S2", identitas: "444", alamat: "Semarang" },
+      ],
+      tanggalMulai: "2026-01-01",
+      tanggalBerakhir: "2026-12-31",
+      objekUsaha: "Pengadaan Laptop",
+      kategoriUsaha: "Elektronik",
+      domisiliHukum: "Semarang",
+      penyelesaianSengketa: ["musyawarah", "pengadilan_agama"],
+      jenisBarang: "Laptop ThinkPad",
+      spesifikasiBarang: "Core i7 RAM 16GB",
+      jumlahBarang: 2,
+      satuanBarang: "unit",
+      hargaPokok: 20000000,
+      marginKeuntungan: 3000000,
+      hargaJual: 23000000,
+      pembayaranTangguh: true,
+      jumlahAngsuran: 6,
+      barangDimiliki: true,
+      adaWakalah: false,
+      adaDenda: false,
+    };
+
+    const draft = generateDraft(testForm);
+    const wordHtml = generateWordHtmlContent(draft);
+    expect(wordHtml).toContain("AKAD MURABAHAH");
+    expect(wordHtml).toContain("LAMPIRAN I: Laporan Pemeriksaan Kepatuhan Syariah");
+    expect(wordHtml).toContain("bukan nasihat hukum");
+    expect(wordHtml).toContain("Rules Engine:");
+
+    const markdown = generateMarkdownContract(draft);
+    expect(markdown).toContain("# AKAD MURABAHAH");
+    expect(markdown).toContain("## Para Pihak");
+    expect(markdown).toContain("Pasal 1:");
+  });
+});
+

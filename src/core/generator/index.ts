@@ -1,7 +1,8 @@
 /**
  * core/generator/index.ts
- * Generator Draf Dokumen Akad Syariah.
- * Bekerja secara deterministik berbasis pustaka klausul JSON dan substitusi variabel.
+ * Generator Draf Dokumen Akad Syariah Adaptif.
+ * Menyusun draf berdasarkan karakteristik transaksi pengguna, menolak fabrikasi fakta,
+ * dan mendukung Clause-Level Safe Revision serta pelacakan versi.
  */
 
 import {
@@ -14,11 +15,57 @@ import {
   MusyarakahFormData,
   MurabahahFormData,
 } from "../types";
-import { evaluateCompliance } from "../rules";
+import { evaluateCompliance, RULES_VERSION } from "../rules";
 
 import mudharabahClauses from "../../../content/clauses/mudharabah.json";
 import musyarakahClauses from "../../../content/clauses/musyarakah.json";
 import murabahahClauses from "../../../content/clauses/murabahah.json";
+
+/**
+ * Peta relasi klausul terhadap ID aturan kepatuhan (Traceability)
+ */
+export const CLAUSE_RULE_MAP: Record<string, string[]> = {
+  // Murabahah
+  "mrb-judul": ["GEN-01"],
+  "mrb-komparisi": ["GEN-01"],
+  "mrb-pertimbangan": ["GEN-01", "GEN-05"],
+  "mrb-pasal-definisi": ["GEN-05", "MRB-01"],
+  "mrb-pasal-objek": ["GEN-05", "MRB-02", "MRB-03", "MRB-07"],
+  "mrb-pasal-harga": ["GEN-02", "MRB-01", "MRB-04"],
+  "mrb-pasal-pembayaran": ["GEN-03", "MRB-05"],
+  "mrb-pasal-denda": ["MRB-06"],
+  "mrb-pasal-wakalah": ["MRB-03"],
+  "mrb-pasal-sengketa": ["GEN-04"],
+  "mrb-penutup": ["GEN-01"],
+
+  // Mudharabah
+  "mdh-judul": ["GEN-01"],
+  "mdh-komparisi": ["GEN-01"],
+  "mdh-pertimbangan": ["GEN-01", "GEN-05"],
+  "mdh-pasal-definisi": ["GEN-05", "MDH-01"],
+  "mdh-pasal-modal": ["GEN-02", "MDH-01"],
+  "mdh-pasal-nisbah": ["MDH-02", "MDH-03"],
+  "mdh-pasal-jenis-usaha": ["GEN-03", "GEN-05", "MDH-05"],
+  "mdh-pasal-kerugian": ["MDH-04"],
+  "mdh-pasal-hak-kewajiban": ["MDH-05"],
+  "mdh-pasal-jaminan": ["MDH-06"],
+  "mdh-pasal-sengketa": ["GEN-04"],
+  "mdh-pasal-berakhir": ["GEN-03"],
+  "mdh-penutup": ["GEN-01"],
+
+  // Musyarakah
+  "msy-judul": ["GEN-01"],
+  "msy-komparisi": ["GEN-01"],
+  "msy-pertimbangan": ["GEN-01", "GEN-05"],
+  "msy-pasal-definisi": ["GEN-05", "MSY-01"],
+  "msy-pasal-modal": ["GEN-02", "MSY-01"],
+  "msy-pasal-nisbah": ["MSY-02", "MSY-04"],
+  "msy-pasal-kerugian": ["MSY-03"],
+  "msy-pasal-pengelolaan": ["MSY-05"],
+  "msy-pasal-jenis-usaha": ["GEN-03", "GEN-05"],
+  "msy-pasal-sengketa": ["GEN-04"],
+  "msy-penutup": ["GEN-01"],
+};
 
 /**
  * Konversi angka ke kalimat terbilang Bahasa Indonesia
@@ -63,6 +110,7 @@ export function formatTanggalIndonesia(dateStr?: string): string {
   if (!dateStr) return "................................";
   try {
     const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return dateStr;
     return d.toLocaleDateString("id-ID", {
       weekday: "long",
       year: "numeric",
@@ -85,7 +133,7 @@ export function formatRupiah(amount: number): string {
 }
 
 /**
- * Menghasilkan variabel untuk substitusi berdasarkan jenis formulir
+ * Menghasilkan variabel untuk substitusi berdasarkan karakteristik transaksi
  */
 export function buildVariableMap(data: AkadFormData): Record<string, string> {
   const map: Record<string, string> = {};
@@ -120,25 +168,25 @@ export function buildVariableMap(data: AkadFormData): Record<string, string> {
     const p1 = data.ppihat[0];
     const p2 = data.ppihat[1];
 
-    map["namaShahibulMaal"] = p1.nama || "";
+    map["namaShahibulMaal"] = p1.nama || "[BELUM DILENGKAPI: Nama Shahibul Maal]";
     map["jenisIdentitasShahibulMaal"] = p1.jenisIdentitas || "NIK";
-    map["identitasShahibulMaal"] = p1.identitas || "";
-    map["alamatShahibulMaal"] = p1.alamat || "";
+    map["identitasShahibulMaal"] = p1.identitas || "[BELUM DILENGKAPI: Nomor Identitas]";
+    map["alamatShahibulMaal"] = p1.alamat || "[BELUM DILENGKAPI: Alamat]";
 
-    map["namaMudharib"] = p2.nama || "";
+    map["namaMudharib"] = p2.nama || "[BELUM DILENGKAPI: Nama Mudharib]";
     map["jenisIdentitasMudharib"] = p2.jenisIdentitas || "NIK";
-    map["identitasMudharib"] = p2.identitas || "";
-    map["alamatMudharib"] = p2.alamat || "";
+    map["identitasMudharib"] = p2.identitas || "[BELUM DILENGKAPI: Nomor Identitas]";
+    map["alamatMudharib"] = p2.alamat || "[BELUM DILENGKAPI: Alamat]";
 
-    map["namaPenjual"] = p1.nama || "";
+    map["namaPenjual"] = p1.nama || "[BELUM DILENGKAPI: Nama Penjual]";
     map["jenisIdentitasPenjual"] = p1.jenisIdentitas || "NIK";
-    map["identitasPenjual"] = p1.identitas || "";
-    map["alamatPenjual"] = p1.alamat || "";
+    map["identitasPenjual"] = p1.identitas || "[BELUM DILENGKAPI: Nomor Identitas]";
+    map["alamatPenjual"] = p1.alamat || "[BELUM DILENGKAPI: Alamat]";
 
-    map["namaPembeli"] = p2.nama || "";
+    map["namaPembeli"] = p2.nama || "[BELUM DILENGKAPI: Nama Pembeli]";
     map["jenisIdentitasPembeli"] = p2.jenisIdentitas || "NIK";
-    map["identitasPembeli"] = p2.identitas || "";
-    map["alamatPembeli"] = p2.alamat || "";
+    map["identitasPembeli"] = p2.identitas || "[BELUM DILENGKAPI: Nomor Identitas]";
+    map["alamatPembeli"] = p2.alamat || "[BELUM DILENGKAPI: Alamat]";
   }
 
   // Data Khusus Mudharabah
@@ -164,15 +212,13 @@ export function buildVariableMap(data: AkadFormData): Record<string, string> {
     map["wewenangPengelolaan"] = s.wewenangPengelolaan || "Pengelolaan bersama dengan musyawarah.";
     map["jenisUsaha"] = s.objekUsaha;
 
-    // Format list daftar pihak
     map["daftarPihak"] = (data.ppihat || [])
       .map(
         (p, idx) =>
-          `${idx + 1}. Nama: ${p.nama}\n   ${p.jenisIdentitas}: ${p.identitas}\n   Alamat: ${p.alamat}\n   Selanjutnya disebut sebagai "Pihak ke-${idx + 1}" (Syarik ${idx + 1});`
+          `${idx + 1}. Nama: ${p.nama || "[Nama]"}\n   ${p.jenisIdentitas || "ID"}: ${p.identitas || "[ID]"}\n   Alamat: ${p.alamat || "[Alamat]"}\n   Selanjutnya disebut sebagai "Pihak ke-${idx + 1}" (Syarik ${idx + 1});`
       )
       .join("\n\n");
 
-    // Format list daftar modal
     map["daftarModal"] = (s.kontribusiModal || [])
       .map(
         (k, idx) =>
@@ -180,7 +226,6 @@ export function buildVariableMap(data: AkadFormData): Record<string, string> {
       )
       .join("\n");
 
-    // Format list daftar nisbah
     map["daftarNisbah"] = (s.nisbahBagiHasil || [])
       .map(
         (n, idx) =>
@@ -188,7 +233,6 @@ export function buildVariableMap(data: AkadFormData): Record<string, string> {
       )
       .join("\n");
 
-    // Format proporsi kerugian (sama dengan proporsi modal)
     map["daftarProporsiKerugian"] = (s.kontribusiModal || [])
       .map((k, idx) => {
         const pct = s.totalModal > 0 ? ((k.jumlah / s.totalModal) * 100).toFixed(1) : "0";
@@ -196,17 +240,16 @@ export function buildVariableMap(data: AkadFormData): Record<string, string> {
       })
       .join("\n");
 
-    // Tanda tangan para pihak
     map["tandaTanganPihak"] = (data.ppihat || [])
-      .map((p, idx) => `Pihak ke-${idx + 1} (${p.nama})\n\n\n________________________\n${p.nama}`)
+      .map((p, idx) => `Pihak ke-${idx + 1} (${p.nama || "Mitra"})\n\n\n________________________\n${p.nama || "Mitra"}`)
       .join("\n\n");
   }
 
-  // Data Khusus Murabahah
+  // Data Khusus Murabahah (Adaptive Flow)
   if (data.jenisAkad === "murabahah") {
     const r = data as MurabahahFormData;
-    map["jenisBarang"] = r.jenisBarang || "";
-    map["spesifikasiBarang"] = r.spesifikasiBarang || "";
+    map["jenisBarang"] = r.jenisBarang || "[BELUM DITENTUKAN: Jenis Barang]";
+    map["spesifikasiBarang"] = r.spesifikasiBarang || "[BELUM DITENTUKAN: Spesifikasi]";
     map["jumlahBarang"] = String(r.jumlahBarang || 1);
     map["satuanBarang"] = r.satuanBarang || "unit";
     map["statusKepemilikan"] = r.barangDimiliki ? "dimiliki dan dikuasai secara sah" : "dipesan melalui kuasa pengadaan";
@@ -240,20 +283,21 @@ export function buildVariableMap(data: AkadFormData): Record<string, string> {
 export function substituteVariables(templateText: string, vars: Record<string, string>): string {
   let output = templateText;
 
-  // Handle conditionals like {{#cond}}YES{{/cond}}{{^cond}}NO{{/cond}}
+  // Conditional positif {{#cond}}...{{/cond}}
   output = output.replace(/{{#(\w+)}}([\s\S]*?){{\/\1}}/g, (_, key, content) => {
     const val = vars[key];
-    const isTrue = val === "true" || (val && val !== "false" && val !== "0");
+    const isTrue = val === "true" || (val && val !== "false" && val !== "0" && val !== "");
     return isTrue ? content : "";
   });
 
+  // Conditional negatif {{^cond}}...{{/cond}}
   output = output.replace(/{{[\\^](\w+)}}([\s\S]*?){{\/\1}}/g, (_, key, content) => {
     const val = vars[key];
     const isFalse = !val || val === "false" || val === "0" || val === "";
     return isFalse ? content : "";
   });
 
-  // Handle simple substitutions {{key}}
+  // Simple substitution {{key}}
   output = output.replace(/{{(\w+)}}/g, (_, key) => {
     return vars[key] !== undefined ? vars[key] : `[${key}]`;
   });
@@ -301,17 +345,23 @@ export function generateDraft(formData: AkadFormData): GeneratedDraft {
     }
 
     if (template.id.endsWith("-judul") || template.id.endsWith("-komparisi")) {
-      // Ditampilkan di bagian struktur kepala dokumen
       continue;
     }
 
-    // Hanya masukkan pasal isi
+    // Adaptive filtering: untuk murabahah, jika tunai dan denda dimatikan, sesuaikan jika perlu
+    const relatedRuleIds = CLAUSE_RULE_MAP[template.id] || [];
+
     generatedClauses.push({
       nomor: pasalCounter++,
       judul: template.title,
       teks: filledText,
       legalSourceIds: template.legalSourceIds,
       templateId: template.id,
+      purpose: template.purpose,
+      isMandatory: template.mandatory,
+      isCustomized: false,
+      originalText: filledText,
+      relatedRuleIds,
     });
   }
 
@@ -328,5 +378,66 @@ export function generateDraft(formData: AkadFormData): GeneratedDraft {
     penutup: penutupText,
     disklaimer: DISCLAIMER_TEXT,
     kepatuhan,
+    draftVersion: 1,
+    rulesVersion: RULES_VERSION,
+    isStale: false,
+    lastEvaluatedAt: new Date().toISOString(),
+  };
+}
+
+/**
+ * Menerapkan revisi klausul pada draf secara aman (Safe Revision).
+ * Menandai isCustomized, menaikkan draftVersion, dan menandai isStale: true
+ * agar kepatuhan diverifikasi ulang sebelum dianggap berlaku.
+ */
+export function applyClauseRevision(
+  draft: GeneratedDraft,
+  clauseNomor: number,
+  newText: string
+): GeneratedDraft {
+  const updatedKlausul = draft.klausul.map((c) => {
+    if (c.nomor === clauseNomor) {
+      return {
+        ...c,
+        teks: newText,
+        isCustomized: true,
+        originalText: c.originalText || c.teks,
+      };
+    }
+    return c;
+  });
+
+  return {
+    ...draft,
+    klausul: updatedKlausul,
+    draftVersion: (draft.draftVersion || 1) + 1,
+    isStale: true,
+  };
+}
+
+/**
+ * Mengembalikan klausul yang telah disunting ke teks asli generator
+ */
+export function resetClauseRevision(
+  draft: GeneratedDraft,
+  clauseNomor: number
+): GeneratedDraft {
+  const updatedKlausul = draft.klausul.map((c) => {
+    if (c.nomor === clauseNomor && c.originalText) {
+      return {
+        ...c,
+        teks: c.originalText,
+        isCustomized: false,
+      };
+    }
+    return c;
+  });
+
+  const anyCustomizedLeft = updatedKlausul.some((c) => c.isCustomized);
+
+  return {
+    ...draft,
+    klausul: updatedKlausul,
+    isStale: anyCustomizedLeft,
   };
 }

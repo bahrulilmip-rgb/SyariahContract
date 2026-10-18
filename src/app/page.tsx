@@ -34,11 +34,19 @@ export default function Home() {
                   </span>
                 </h1>
 
-                {/* Subtitle */}
+                {/* Subtitle with Product Identity */}
                 <p className="text-base sm:text-lg text-emerald-100/90 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                  Aplikasi interaktif yang memandu pelaku usaha menyusun perjanjian bisnis syariah
-                  sesuai kaidah Fatwa DSN-MUI, Kompilasi Hukum Ekonomi Syariah (KHES), dan KUHPerdata dalam waktu kurang dari 10 menit.
+                  Membantu pelaku usaha memahami apa yang mereka sepakati, mengapa suatu klausul diperlukan, dan bagian mana yang masih membutuhkan pemeriksaan lebih lanjut sesuai rujukan Fatwa DSN-MUI, KHES, dan KUHPerdata.
                 </p>
+
+                {/* Core Principles */}
+                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-1 text-xs text-emerald-200">
+                  <span className="bg-emerald-800/40 border border-emerald-400/30 px-2.5 py-1 rounded-lg">Clarity</span>
+                  <span className="bg-emerald-800/40 border border-emerald-400/30 px-2.5 py-1 rounded-lg">Traceability</span>
+                  <span className="bg-emerald-800/40 border border-emerald-400/30 px-2.5 py-1 rounded-lg">Honesty</span>
+                  <span className="bg-emerald-800/40 border border-emerald-400/30 px-2.5 py-1 rounded-lg">Human Oversight</span>
+                  <span className="bg-emerald-800/40 border border-emerald-400/30 px-2.5 py-1 rounded-lg">Privacy</span>
+                </div>
 
                 {/* CTA Buttons */}
                 <div className="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
@@ -60,24 +68,24 @@ export default function Home() {
                 {/* Key Badges */}
                 <div className="pt-4 grid grid-cols-2 sm:grid-cols-4 gap-3 text-left">
                   <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
-                    <div className="text-[10px] font-mono uppercase text-emerald-300 font-bold">Waktu</div>
-                    <div className="text-sm font-semibold text-white mt-0.5">&lt; 10 Menit</div>
-                    <div className="text-[11px] text-emerald-200/70">Draf langsung jadi</div>
+                    <div className="text-[10px] font-mono uppercase text-emerald-300 font-bold">Generator</div>
+                    <div className="text-sm font-semibold text-white mt-0.5">Adaptif & Aman</div>
+                    <div className="text-[11px] text-emerald-200/70">Klausul relevan berdasar fakta</div>
                   </div>
                   <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
                     <div className="text-[10px] font-mono uppercase text-teal-300 font-bold">Kepatuhan</div>
                     <div className="text-sm font-semibold text-white mt-0.5">Rule Engine</div>
-                    <div className="text-[11px] text-emerald-200/70">Cek kepatuhan otomatis</div>
+                    <div className="text-[11px] text-emerald-200/70">Status terstruktur & dapat diuji</div>
                   </div>
                   <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
                     <div className="text-[10px] font-mono uppercase text-amber-300 font-bold">Format</div>
-                    <div className="text-sm font-semibold text-white mt-0.5">DOCX & PDF</div>
-                    <div className="text-[11px] text-emerald-200/70">Ekspor siap cetak</div>
+                    <div className="text-sm font-semibold text-white mt-0.5">Word & PDF</div>
+                    <div className="text-[11px] text-emerald-200/70">Ekspor siap cetak + audit trail</div>
                   </div>
                   <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
-                    <div className="text-[10px] font-mono uppercase text-blue-300 font-bold">Keamanan</div>
-                    <div className="text-sm font-semibold text-white mt-0.5">Stateless</div>
-                    <div className="text-[11px] text-emerald-200/70">Tanpa simpan data</div>
+                    <div className="text-[10px] font-mono uppercase text-blue-300 font-bold">Privasi</div>
+                    <div className="text-sm font-semibold text-white mt-0.5">Lokal (Klien)</div>
+                    <div className="text-[11px] text-emerald-200/70">Tanpa simpan di server luar</div>
                   </div>
                 </div>
               </div>
@@ -97,35 +105,38 @@ export default function Home() {
                         />
                       </div>
                       <div>
-                        <div className="font-bold text-slate-900 text-sm">Preview Dokumen</div>
-                        <div className="text-xs text-emerald-700 font-medium">Kompilasi Hukum Syariah</div>
+                        <div className="font-bold text-slate-900 text-sm">Pratinjau Draf & Klausul</div>
+                        <div className="text-xs text-emerald-700 font-medium">Model R&D Hukum Ekonomi Syariah</div>
                       </div>
                     </div>
-                    <span className="text-[10px] font-semibold bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full uppercase tracking-wider">
-                      Terverifikasi
+                    <span className="text-[10px] font-semibold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-full uppercase tracking-wider border border-slate-300">
+                      Rujukan Terbuka
                     </span>
                   </div>
 
                   <div className="space-y-3.5 my-5 text-xs text-slate-600 bg-slate-50 p-4 rounded-xl border border-slate-200/70 font-mono">
                     <p className="font-bold text-center text-slate-800 uppercase tracking-wider text-[11px]">
-                      AKAD MUDHARABAH
+                      CONTOH AKAD MURABAHAH (ADAPTIF)
                     </p>
                     <p className="text-justify leading-relaxed">
-                      &quot;...Para Pihak sepakat membagi keuntungan usaha kuliner dengan nisbah 60% bagi Pihak Pertama (Shahibul Maal) dan 40% bagi Pihak Kedua (Mudharib)...&quot;
+                      &quot;...Pihak Pertama menjual dan Pihak Kedua membeli barang secara transparan dengan harga pokok Rp 40.000.000 dan margin keuntungan tetap Rp 5.000.000...&quot;
                     </p>
                     <div className="pt-2 border-t border-slate-200 flex items-center justify-between text-[11px] text-emerald-800 font-medium">
-                      <span>Fatwa DSN 07/2000</span>
-                      <span>KHES Buku II</span>
+                      <span>Fatwa DSN 04/2000</span>
+                      <span>KHES Buku II Pasal 118</span>
                     </div>
                   </div>
 
                   <div className="space-y-2 pt-2">
                     <div className="flex items-center justify-between text-xs text-slate-600">
-                      <span>Kelayakan Aturan Kepatuhan:</span>
-                      <span className="font-bold text-emerald-700">100% Lolos</span>
+                      <span>Pemeriksaan Aturan Spesifik:</span>
+                      <span className="font-bold text-emerald-700">Terbuka & Terstruktur</span>
                     </div>
-                    <div className="w-full bg-slate-100 rounded-full h-2">
-                      <div className="bg-emerald-600 h-2 rounded-full w-full" />
+                    <div className="grid grid-cols-4 gap-1 text-[10px] font-semibold text-center">
+                      <div className="bg-emerald-100 text-emerald-800 py-1 rounded">PASS</div>
+                      <div className="bg-amber-100 text-amber-800 py-1 rounded">NEEDS INFO</div>
+                      <div className="bg-orange-100 text-orange-800 py-1 rounded">REVIEW REQ</div>
+                      <div className="bg-slate-100 text-slate-700 py-1 rounded">NOT CHECKED</div>
                     </div>
                   </div>
 
@@ -346,51 +357,91 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Legal Sources Section (F6) */}
+        {/* Legal Sources Section (Verified Legal Source Registry) */}
         <section id="dasar-hukum" className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
             <div className="inline-flex items-center px-3 py-1 rounded-full bg-slate-200/80 text-slate-800 text-xs font-semibold">
-              Pustaka Hukum & Fatwa (Bagian 8 PRD)
+              Verified Legal Source Registry
             </div>
             <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-              Rujukan Hukum & Fikih Muamalah
+              Pustaka Rujukan Hukum & Fikih Muamalah
             </h2>
             <p className="text-base text-slate-600">
-              Klausul disusun secara deterministik dan merujuk pada regulasi negara dan fatwa resmi DSN-MUI.
+              Setiap klausul dan aturan kepatuhan terhubung ke sumber hukum positif dan fatwa resmi. Sesuai prinsip kejujuran ilmiah, seluruh rujukan diberi label status verifikasi nyata dan disertai catatan keterbatasan.
             </p>
+            <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900 text-left max-w-2xl mx-auto">
+              <strong>Catatan Integritas R&D:</strong> Seluruh sumber berlabel <em>UNVERIFIED</em> sampai divalidasi oleh validator ahli atau Dewan Pengawas Syariah (DPS). Sistem tidak mengklaim kepastian hukum yang belum diuji secara formal.
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {legalSources.map((source) => (
               <div
                 key={source.id}
-                className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:border-emerald-300 transition-colors"
+                className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:border-emerald-300 transition-colors flex flex-col justify-between"
               >
-                <div className="flex items-start justify-between gap-3 mb-2">
-                  <span className="font-mono text-[11px] font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
-                    {source.id}
-                  </span>
-                  <span className="text-[10px] font-semibold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
-                    Menunggu Verifikasi Ahli
-                  </span>
-                </div>
-                <h3 className="font-bold text-slate-900 text-sm">{source.title}</h3>
-                <p className="text-xs text-emerald-700 font-medium mt-0.5">{source.number}</p>
-                {source.note && (
-                  <p className="text-xs text-slate-500 mt-2 bg-slate-50 p-2.5 rounded-lg border border-slate-100">
-                    {source.note}
-                  </p>
-                )}
-                <div className="mt-3 flex flex-wrap items-center gap-1.5">
-                  <span className="text-[10px] text-slate-400 font-medium">Digunakan pada aturan:</span>
-                  {source.usedFor.map((ruleId) => (
-                    <span
-                      key={ruleId}
-                      className="text-[10px] font-mono bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded"
-                    >
-                      {ruleId}
+                <div>
+                  <div className="flex items-start justify-between gap-3 mb-2">
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-[11px] font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
+                        {source.id}
+                      </span>
+                      {source.category && (
+                        <span className="text-[10px] text-slate-500 bg-slate-100 px-2 py-0.5 rounded capitalize">
+                          {source.category.replace(/_/g, " ")}
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-[10px] font-semibold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
+                      {source.verificationStatus || "UNVERIFIED"}
                     </span>
-                  ))}
+                  </div>
+
+                  <h3 className="font-bold text-slate-900 text-sm">{source.title}</h3>
+                  <p className="text-xs text-emerald-800 font-medium mt-0.5">{source.officialNumber || source.number}</p>
+
+                  {source.specificArticle && (
+                    <p className="text-xs text-slate-700 font-mono bg-emerald-50/50 p-2 rounded-lg border border-emerald-100 mt-2">
+                      <span className="font-semibold text-emerald-900">Pasal/Bagian Rujukan:</span> {source.specificArticle}
+                    </p>
+                  )}
+
+                  {source.note && (
+                    <p className="text-xs text-slate-600 mt-2 bg-slate-50 p-2.5 rounded-lg border border-slate-100 leading-relaxed">
+                      {source.note}
+                    </p>
+                  )}
+
+                  {source.limitationNote && (
+                    <p className="text-[11px] text-amber-900 mt-2 bg-amber-50/60 p-2 rounded-lg border border-amber-100 leading-relaxed">
+                      <span className="font-semibold">Keterbatasan & Kebutuhan Telaah:</span> {source.limitationNote}
+                    </p>
+                  )}
+                </div>
+
+                <div className="mt-4 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-[10px]">
+                  <div className="flex flex-wrap items-center gap-1">
+                    <span className="text-slate-400">Aturan terkait:</span>
+                    {(source.usedForRules || source.usedFor).map((ruleId) => (
+                      <span
+                        key={ruleId}
+                        className="font-mono bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded"
+                      >
+                        {ruleId}
+                      </span>
+                    ))}
+                  </div>
+
+                  {source.officialUrl && (
+                    <a
+                      href={source.officialUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-emerald-700 hover:text-emerald-900 font-semibold underline"
+                    >
+                      Tautan Dokumen ↗
+                    </a>
+                  )}
                 </div>
               </div>
             ))}

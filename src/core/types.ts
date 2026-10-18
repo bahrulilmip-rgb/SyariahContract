@@ -22,6 +22,28 @@ export type LegalSourceType =
   | 'khes'
   | 'kuhperdata';
 
+export type ComplianceStatus =
+  | 'PASS'
+  | 'FAIL'
+  | 'NEEDS_INFORMATION'
+  | 'REVIEW_REQUIRED'
+  | 'NOT_CHECKED';
+
+/** Kategori sumber hukum yang dibedakan secara formal */
+export type LegalSourceCategory =
+  | 'peraturan_perundang_undangan'
+  | 'fatwa_dsn_mui'
+  | 'kompilasi_hukum'
+  | 'pendapat_doktrin'
+  | 'prinsip_syariah'
+  | 'kebijakan_internal';
+
+/** Status verifikasi oleh ahli hukum syariah */
+export type VerificationStatus =
+  | 'VERIFIED'
+  | 'UNVERIFIED'
+  | 'NEEDS_EXPERT_REVIEW';
+
 /** Peran pihak dalam akad */
 export type PartyRole =
   | 'shahibul_maal'    // Pemilik modal (Mudharabah)
@@ -46,18 +68,38 @@ export type DisputeResolution =
 export interface LegalSource {
   /** ID unik sumber hukum, contoh: "FATWA-MDH" */
   id: string;
-  /** Jenis sumber hukum */
+  /** Jenis sumber hukum (legacy compatibility) */
   type: LegalSourceType;
-  /** Judul lengkap */
+  /** Kategori formal sumber hukum */
+  category?: LegalSourceCategory;
+  /** Judul lengkap resmi */
   title: string;
   /** Nomor dokumen resmi */
   number: string;
+  /** Nomor resmi terformat */
+  officialNumber?: string;
+  /** Pasal atau butir spesifik yang dirujuk */
+  specificArticle?: string;
+  /** Tautan resmi dokumen jika tersedia */
+  officialUrl?: string;
   /** Daftar ID aturan yang merujuk sumber ini */
   usedFor: string[];
-  /** Status verifikasi oleh ahli */
+  /** Status verifikasi boolean sederhana (legacy compatibility) */
   verified: boolean;
+  /** Status verifikasi terstruktur */
+  verificationStatus?: VerificationStatus;
+  /** Tanggal terakhir diperiksa/diverifikasi */
+  lastCheckedDate?: string;
   /** Catatan tambahan */
   note?: string;
+  /** Catatan batasan atau kebutuhan telaah ahli */
+  limitationNote?: string;
+  /** Lembaga yang menerbitkan */
+  authorityName?: string;
+  /** Aturan yang merujuk sumber ini */
+  usedForRules?: string[];
+  /** Klausul yang merujuk sumber ini */
+  usedForClauses?: string[];
 }
 
 // ============================================================================
@@ -82,6 +124,8 @@ export interface ClauseTemplate {
   legalSourceIds: string[];
   /** Apakah klausul ini wajib ada di setiap draf */
   mandatory: boolean;
+  /** Penjelasan tujuan klausul (Clarity: mengapa klausul ini ada) */
+  purpose?: string;
 }
 
 // ============================================================================
@@ -96,40 +140,77 @@ export interface ComplianceRule {
   akad: AkadType | 'general';
   /** Tingkat keparahan: block (harus diperbaiki), warn (peringatan), info */
   severity: Severity;
-  /** Pesan kesalahan dalam Bahasa Indonesia */
+  /** Pesan dalam Bahasa Indonesia */
   message: string;
   /** ID sumber hukum terkait */
   legalSourceIds: string[];
+  /** Persyaratan yang diuji */
+  requirementTested?: string;
 }
 
-/** Hasil evaluasi satu aturan kepatuhan */
+/** Hasil evaluasi satu aturan kepatuhan (Explainable Finding) */
 export interface ComplianceResult {
   /** ID aturan yang dievaluasi */
   ruleId: string;
+  /** Status kepatuhan terstruktur */
+  status: ComplianceStatus;
   /** Tingkat keparahan */
   severity: Severity;
-  /** Apakah lolos evaluasi */
+  /** Apakah lolos evaluasi (legacy compatibility: true jika PASS) */
   passed: boolean;
-  /** Pesan hasil evaluasi */
+  /** Pesan ringkas hasil evaluasi */
   message: string;
   /** ID sumber hukum terkait */
   legalSourceIds: string[];
+
+  // Bidang Penjelas (Explainable Findings)
+  /** Apa persyaratan spesifik yang diperiksa? */
+  requirementTested?: string;
+  /** Fakta transaksi aktual yang dievaluasi */
+  factsEvaluated?: string[];
+  /** Bagian klausul draf mana yang terkait */
+  relatedClauseIds?: string[];
+  /** Mengapa temuan ini muncul? */
+  explanation?: string;
+  /** Status verifikasi sumber rujukan */
+  sourcesVerificationStatus?: VerificationStatus;
+  /** Apa yang masih belum diketahui oleh sistem? */
+  unknowns?: string[];
+  /** Langkah perbaikan yang dapat dilakukan pengguna */
+  actionableSuggestion?: string;
+  /** Apakah persoalan ini membutuhkan penilaian ahli syariah/hukum? */
+  expertReviewRequired?: boolean;
+  /** Alasan mengapa diperlukan telaah ahli */
+  expertReviewReason?: string;
 }
 
 /** Ringkasan keseluruhan kepatuhan */
 export interface ComplianceSummary {
   /** Semua hasil evaluasi */
   results: ComplianceResult[];
-  /** Apakah ada aturan block yang gagal */
+  /** Apakah ada aturan block yang berstatus FAIL */
   hasBlockingErrors: boolean;
-  /** Jumlah yang lulus */
+  /** Jumlah yang berstatus PASS */
   passedCount: number;
   /** Jumlah peringatan */
   warningCount: number;
-  /** Jumlah yang gagal (block) */
+  /** Jumlah kegagalan block */
   blockCount: number;
   /** Jumlah info */
   infoCount: number;
+
+  /** Rekap status terstruktur */
+  statusCounts?: {
+    pass: number;
+    fail: number;
+    needsInformation: number;
+    reviewRequired: number;
+    notChecked: number;
+  };
+  /** Versi aturan kepatuhan */
+  rulesVersion?: string;
+  /** Disklaimer metodologis kepatuhan */
+  disclaimer?: string;
 }
 
 // ============================================================================
@@ -284,6 +365,16 @@ export interface GeneratedClause {
   legalSourceIds: string[];
   /** ID template klausul asal */
   templateId: string;
+  /** Penjelasan maksud dan tujuan klausul (Clarity) */
+  purpose?: string;
+  /** Apakah klausul ini esensial (rukun/syarat mutlak) atau aksesoris */
+  isMandatory?: boolean;
+  /** Apakah klausul telah diubah/disunting secara manual oleh pengguna */
+  isCustomized?: boolean;
+  /** Teks asli sebelum penyuntingan manual */
+  originalText?: string;
+  /** ID aturan kepatuhan yang terkait dengan klausul ini */
+  relatedRuleIds?: string[];
 }
 
 /** Draf dokumen akad yang dihasilkan */
@@ -312,6 +403,15 @@ export interface GeneratedDraft {
   disklaimer: string;
   /** Ringkasan kepatuhan */
   kepatuhan: ComplianceSummary;
+
+  /** Nomor versi draf (naik jika ada revisi manual) */
+  draftVersion?: number;
+  /** Versi mesin aturan kepatuhan */
+  rulesVersion?: string;
+  /** Apakah draf telah diubah sejak pemeriksaan kepatuhan terakhir */
+  isStale?: boolean;
+  /** Timestamp pemeriksaan terakhir */
+  lastEvaluatedAt?: string;
 }
 
 // ============================================================================
